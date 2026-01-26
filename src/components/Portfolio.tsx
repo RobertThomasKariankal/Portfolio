@@ -1,0 +1,118 @@
+import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+
+const projects = [
+  {
+    id: 1,
+    title: "Plant Shop Mobile App",
+    description: "A modern e-commerce mobile application for plant lovers with seamless checkout experience.",
+    tags: ["UI/UX Design", "App Design", "Wireframe"],
+    image: "https://images.unsplash.com/photo-1545241047-6083a3684587?w=600&h=400&fit=crop",
+  },
+  {
+    id: 2,
+    title: "Solar Energy Dashboard",
+    description: "Comprehensive dashboard for monitoring solar panel performance and energy consumption.",
+    tags: ["Dashboard", "Web Design", "Data Viz"],
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop",
+  },
+  {
+    id: 3,
+    title: "Finance App Redesign",
+    description: "Complete redesign of a banking application focusing on user experience and accessibility.",
+    tags: ["UI/UX Design", "Mobile", "Fintech"],
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
+  },
+];
+
+const Portfolio = () => {
+  return (
+    <section id="portfolio" className="py-24 relative">
+      {/* Background watermark */}
+      <div className="watermark-text top-20 left-0">PORTFOLIO</div>
+      
+      <div className="container px-6 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="mb-16"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/10 mb-6">
+            <span className="text-sm font-medium text-primary">My Portfolio</span>
+          </div>
+          
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold">
+              Let's Have a Look
+              <br />
+              at <span className="text-gradient">My Portfolio</span>
+            </h2>
+            
+            <a 
+              href="#" 
+              className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-semibold rounded-full hover:shadow-[0_0_30px_hsl(84_81%_44%/0.5)] transition-all duration-300 w-fit"
+            >
+              View All Projects
+            </a>
+          </div>
+        </motion.div>
+
+        <div className="space-y-12">
+          {projects.map((project, index) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="glass-card p-6 md:p-8 hover-lift neon-border-hover group"
+            >
+              <div className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 items-center`}>
+                <div className="w-full lg:w-1/2 overflow-hidden rounded-xl">
+                  <img 
+                    src={project.image} 
+                    alt={project.title}
+                    className="w-full h-64 md:h-80 object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                
+                <div className="w-full lg:w-1/2 space-y-6">
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag) => (
+                      <span 
+                        key={tag}
+                        className="px-4 py-1.5 text-sm font-medium bg-primary text-primary-foreground rounded-full"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  
+                  <h3 className="font-display text-2xl md:text-3xl font-bold">
+                    {project.title}
+                  </h3>
+                  
+                  <p className="text-muted-foreground leading-relaxed">
+                    {project.description}
+                  </p>
+                  
+                  <a 
+                    href="#" 
+                    className="inline-flex items-center gap-2 text-foreground font-medium hover:text-primary transition-colors group/link"
+                  >
+                    <ArrowUpRight className="w-5 h-5 transition-transform group-hover/link:translate-x-1 group-hover/link:-translate-y-1" />
+                    <span>View Project</span>
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Portfolio;
