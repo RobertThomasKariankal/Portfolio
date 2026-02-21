@@ -40,7 +40,7 @@ const Journey = () => {
       <div className="watermark-text top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         SKILLS & CERTS
       </div>
-      
+
       <div className="container px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -52,7 +52,7 @@ const Journey = () => {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/10 mb-6">
             <span className="text-sm font-medium text-primary">Certifications & Skills</span>
           </div>
-          
+
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold">
             My <span className="text-gradient">Certifications &</span>
             <br />
@@ -65,18 +65,18 @@ const Journey = () => {
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="glass-card p-8 neon-border-hover"
+            className="glass-morphism-heavy p-10 border-white/10"
           >
-            <div className="flex items-center gap-4 mb-8">
-              <div className="p-3 bg-primary/20 rounded-xl">
-                <Award className="w-6 h-6 text-primary" />
+            <div className="flex items-center gap-4 mb-10">
+              <div className="p-4 bg-primary/20 rounded-2xl shadow-[0_0_20px_hsl(var(--primary)/0.2)]">
+                <Award className="w-8 h-8 text-primary" />
               </div>
-              <h3 className="font-display text-2xl font-bold">Certifications</h3>
+              <h3 className="font-display text-3xl font-bold">Certifications</h3>
             </div>
-            
-            <div className="space-y-6">
+
+            <div className="space-y-8">
               {certifications.map((item, index) => (
                 <motion.div
                   key={index}
@@ -84,19 +84,18 @@ const Journey = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="flex items-start justify-between gap-4 pb-6 border-b border-border last:border-0 last:pb-0"
+                  className="flex items-start justify-between gap-6 pb-8 border-b border-white/5 last:border-0 last:pb-0"
                 >
                   <div className="flex-1">
-                    <h4 className="font-semibold text-foreground mb-1">{item.title}</h4>
-                    <p className="text-sm text-muted-foreground">{item.issuer}</p>
+                    <h4 className="text-xl font-bold text-foreground mb-2">{item.title}</h4>
+                    <p className="text-muted-foreground">{item.issuer}</p>
                   </div>
-                  <span className={`px-4 py-1.5 text-sm font-medium rounded-full whitespace-nowrap ${
-                    item.status === "Completed" 
-                      ? "bg-primary text-primary-foreground" 
-                      : item.status === "In Progress"
-                      ? "bg-primary/30 text-primary"
-                      : "bg-muted text-muted-foreground"
-                  }`}>
+                  <span className={`px-6 py-2 text-xs font-bold uppercase tracking-widest rounded-full shadow-lg ${item.status === "Completed"
+                    ? "clay-morphism-primary"
+                    : item.status === "In Progress"
+                      ? "bg-primary/20 text-primary border border-primary/30"
+                      : "bg-muted/50 text-muted-foreground"
+                    }`}>
                     {item.status}
                   </span>
                 </motion.div>
@@ -108,18 +107,18 @@ const Journey = () => {
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="glass-card p-8 neon-border-hover"
+            className="glass-morphism-heavy p-10 border-white/10"
           >
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-10">
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-primary/20 rounded-xl">
-                  <Wrench className="w-6 h-6 text-primary" />
+                <div className="p-4 bg-primary/20 rounded-2xl shadow-[0_0_20px_hsl(var(--primary)/0.2)]">
+                  <Wrench className="w-8 h-8 text-primary" />
                 </div>
-                <h3 className="font-display text-2xl font-bold">Technical Skills</h3>
+                <h3 className="font-display text-3xl font-bold">Technical Skills</h3>
               </div>
-              
+
               {/* Navigation Arrows */}
               <div className="flex items-center gap-2">
                 <button
@@ -136,7 +135,7 @@ const Journey = () => {
                 </button>
               </div>
             </div>
-            
+
             {/* Sliding Content */}
             <div className="relative overflow-hidden min-h-[280px]">
               <AnimatePresence mode="wait">
@@ -173,11 +172,10 @@ const Journey = () => {
                 <button
                   key={index}
                   onClick={() => setCurrentPage(index)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    currentPage === index 
-                      ? "w-6 bg-primary" 
-                      : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
-                  }`}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${currentPage === index
+                    ? "w-6 bg-primary"
+                    : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                    }`}
                 />
               ))}
             </div>

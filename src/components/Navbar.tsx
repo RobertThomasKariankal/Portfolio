@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { ModeToggle } from "./ModeToggle";
 
 const navLinks = [
-  { label: "Home", href: "#" },
-  { label: "Portfolio", href: "#portfolio" },
-  { label: "About", href: "#journey" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/" },
+  { label: "Portfolio", href: "/work" },
+  { label: "Certificates", href: "/certificates" },
+  { label: "Experience", href: "/experience" },
+  { label: "Contact", href: "/connect" },
 ];
 
 const Navbar = () => {
@@ -25,39 +28,31 @@ const Navbar = () => {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.6 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-background/80 backdrop-blur-xl border-b border-border" : ""
-      }`}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      className={`fixed top-2 left-4 right-4 z-50 transition-all duration-500 rounded-2xl ${isScrolled ? "glass-morphism-heavy py-1" : "bg-transparent py-2"
+        }`}
     >
       <div className="container px-6">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <a href="#" className="font-display text-2xl font-bold">
+          <Link to="/" className="font-display text-2xl font-bold">
             Robert<span className="text-primary">.</span>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.label}
-                href={link.href}
-                className="text-muted-foreground hover:text-foreground transition-colors relative group"
+                to={link.href}
+                className={`text-sm font-medium transition-colors hover:text-primary ${location.pathname === link.href ? "text-primary" : "text-foreground/70"
+                  }`}
               >
                 {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
-              </a>
+              </Link>
             ))}
+            <ModeToggle />
           </div>
-
-          {/* CTA Button */}
-          <a
-            href="#contact"
-            className="hidden md:inline-flex items-center px-6 py-2.5 bg-primary text-primary-foreground font-medium rounded-full hover:shadow-[0_0_20px_hsl(84_81%_44%/0.4)] transition-all duration-300"
-          >
-            Hire Me
-          </a>
 
           {/* Mobile Menu Button */}
           <button
@@ -80,22 +75,18 @@ const Navbar = () => {
           >
             <div className="container px-6 py-6 space-y-4">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.label}
-                  href={link.href}
+                  to={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="block text-lg text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
-              <a
-                href="#contact"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="inline-flex items-center px-6 py-2.5 bg-primary text-primary-foreground font-medium rounded-full"
-              >
-                Hire Me
-              </a>
+              <div className="pt-4 border-t border-border mt-4">
+                <ModeToggle />
+              </div>
             </div>
           </motion.div>
         )}

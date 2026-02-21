@@ -13,9 +13,9 @@ const Footer = () => {
           className="flex flex-col md:flex-row items-center justify-between gap-4"
         >
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Alex Designer. All rights reserved.
+            © {new Date().getFullYear()} Robert. All rights reserved.
           </p>
-          
+
           <p className="inline-flex items-center gap-1 text-sm text-muted-foreground">
             Made with <Heart className="w-4 h-4 text-primary fill-primary" /> and creativity
           </p>
