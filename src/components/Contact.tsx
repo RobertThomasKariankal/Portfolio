@@ -44,7 +44,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Email</p>
-                  <p className="font-medium">robert@example.com</p>
+                  <p className="font-medium">robertthomaskariankal@gmail.com</p>
                 </div>
               </div>
 
@@ -64,7 +64,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Location</p>
-                  <p className="font-medium">Cyber City, IN</p>
+                  <p className="font-medium">Pala, Kottayam, Kerala</p>
                 </div>
               </div>
             </div>
@@ -73,7 +73,7 @@ const Contact = () => {
               {[Github, Linkedin, Twitter].map((Icon, index) => (
                 <a
                   key={index}
-                  href="#"
+                  href="https://github.com/RobertThomasKariankal"
                   className="p-3 bg-secondary rounded-xl hover:bg-primary/20 hover:text-primary transition-all duration-300"
                 >
                   <Icon className="w-5 h-5" />

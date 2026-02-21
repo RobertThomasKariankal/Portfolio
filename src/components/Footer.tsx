@@ -17,7 +17,7 @@ const Footer = () => {
           </p>
 
           <p className="inline-flex items-center gap-1 text-sm text-muted-foreground">
-            Made with <Heart className="w-4 h-4 text-primary fill-primary" /> and creativity
+            Made with Hacks,creativity and <Heart className="w-4 h-4 text-primary fill-primary" />
           </p>
         </motion.div>
       </div>
