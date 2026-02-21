@@ -70,10 +70,16 @@ const Contact = () => {
             </div>
 
             <div className="flex gap-4 pt-4">
-              {[Github, Linkedin, Twitter].map((Icon, index) => (
+              {[
+                { icon: Github, link: "https://github.com/RobertThomasKariankal" },
+                { icon: Linkedin, link: "https://www.linkedin.com/in/robertthomaskariankal/" },
+                { icon: Twitter, link: "#" },
+              ].map(({ icon: Icon, link }, index) => (
                 <a
                   key={index}
-                  href="https://github.com/RobertThomasKariankal"
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="p-3 bg-secondary rounded-xl hover:bg-primary/20 hover:text-primary transition-all duration-300"
                 >
                   <Icon className="w-5 h-5" />

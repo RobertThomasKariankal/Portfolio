@@ -2,13 +2,17 @@ import { Asterisk } from "lucide-react";
 
 const skills = [
   "Web Design",
+  "Automation",
+  "Scripting",
   "App Design",
-  "Dashboard",
+  "Cloud Security",
   "Wireframe",
+  "Networking",
   "UI/UX Design",
-  "Branding",
+  "Pentesting",
   "Prototyping",
   "Figma",
+  "Data Analysis"
 ];
 
 const SkillsMarquee = () => {

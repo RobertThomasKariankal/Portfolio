@@ -11,8 +11,17 @@ const certifications = [
         date: "2023",
         description: "Validated foundational cybersecurity skills by successfully compromising a host system and extracting hidden flags through steganography and advanced security analysis.",
         status: "Completed",
-        link: "#",
+        link: "https://media.licdn.com/dms/image/v2/D4E2DAQEsIl6HSVlb9g/profile-treasury-document-images_1280/B4EZiFF0v5HEAU-/1/1754579558616?e=1772668800&v=beta&t=1DNYUbEkjkdM_zZesgn_jx7152jUu5uB4OMmAHe9cZM",
         icon: Award
+    }, {
+
+        title: "CINEHACK AI",
+        issuer: "FISAT",
+        date: "2025",
+        description: "National Level Film-Based Hackathon.",
+        status: "Completed",
+        link: "#",
+        icon: ShieldCheck
     },
     {
         title: "AI Fusion: Exploring Robotics and Artificial Intelligence",
@@ -24,14 +33,32 @@ const certifications = [
         icon: FileText
 
     }, {
-
-        title: "CINEHACK AI",
-        issuer: "FISAT",
-        date: "2025",
-        description: "National Level Film-Based Hackathon.",
+        title: "AI Fusion: Exploring Robotics and Artificial Intelligence",
+        issuer: "SJCET",
+        date: "2024",
+        description: "The “AI Fusion” event showcased the integration of robotics, artificial intelligence, and IoT for smart automation and real-time decision-making systems.",
         status: "Completed",
         link: "#",
-        icon: ShieldCheck
+        icon: FileText
+
+    }, {
+        title: "AI Fusion: Exploring Robotics and Artificial Intelligence",
+        issuer: "SJCET",
+        date: "2024",
+        description: "The “AI Fusion” event showcased the integration of robotics, artificial intelligence, and IoT for smart automation and real-time decision-making systems.",
+        status: "Completed",
+        link: "#",
+        icon: FileText
+
+    }, {
+        title: "AI Fusion: Exploring Robotics and Artificial Intelligence",
+        issuer: "SJCET",
+        date: "2024",
+        description: "The “AI Fusion” event showcased the integration of robotics, artificial intelligence, and IoT for smart automation and real-time decision-making systems.",
+        status: "Completed",
+        link: "#",
+        icon: FileText
+
     }
 
 ];

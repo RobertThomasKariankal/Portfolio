@@ -19,6 +19,13 @@ const experiences: TimelineItem[] = [
         type: "work",
     },
     {
+        title: "CINEHACK AI",
+        organization: "Federal Institute of Science And Technology (FISAT),Angamaly",
+        date: "2025",
+        description: "Created Aegis,Solved Online Harassing And Illegal Piracy Of Original Content Using Advanced AI Detection and Crawlers ",
+        type: "education",
+    },
+    {
         title: "B.Tech in Computer Science (Cybersecurity)",
         organization: "St Joseph's College of Engineering And Technology ,Palai",
         date: "2023 - Present",
