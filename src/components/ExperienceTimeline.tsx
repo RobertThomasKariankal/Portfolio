@@ -7,7 +7,7 @@ interface TimelineItem {
     organization: string;
     date: string;
     description: string;
-    type: "work" | "education";
+    type: "work" | "education" | "Volunteer";
 }
 
 const experiences: TimelineItem[] = [
@@ -24,6 +24,13 @@ const experiences: TimelineItem[] = [
         date: "2025",
         description: "Created Aegis,Solved Online Harassing And Illegal Piracy Of Original Content Using Advanced AI Detection and Crawlers ",
         type: "education",
+    },
+    {
+        title: "NRPF Unit Coordinator",
+        organization: "National Service Scheme(NSS),SJCET",
+        date: "2024 - 2025",
+        description: "NRPF is a flagship NSS Kerala environmental initiative that mobilizes student volunteers to lead afforestation, waste management, water conservation, and sustainability actions across campuses and communities.",
+        type: "Volunteer",
     },
     {
         title: "B.Tech in Computer Science (Cybersecurity)",

@@ -4,25 +4,31 @@ import { ArrowUpRight } from "lucide-react";
 const projects = [
   {
     id: 1,
+    title: "Quantum Enhance Secure Communication System",
+    description: "Quantum-Resistant Secure Communication System is a future-ready security framework designed to protect digital communication from both current cyber threats and emerging quantum computing risks.",
+    tags: ["Post Quantum Cryptography", "Secure Communication", "Enterprise Security", "Network Security"],
+    image: "https://www.nist.gov/sites/default/files/styles/960_x_960_limit/public/images/2023/08/22/PQC_Algo_Pre-standardization-vid.jpg?itok=tpUkOrYt",
+  },
+  {
+    id: 2,
+    title: "Aegis",
+    description: "Aegis is a powerful YouTube comment analysis tool that detects bot comments, harassment, spam, and copyright violations in real-time. Built with Python Flask backend and modern JavaScript frontend.",
+    tags: ["Illegal piracy detection", "Copyrighted Content Analysis", "Harassment Detection", "Spam Detection"],
+    image: "https://blog-c01b515e.scoredetect.com/wp-content/uploads/2025/05/image_23c05e989b1642923067ec175f1e287d.jpeg",
+  },
+  {
+    id: 3,
+    title: "LinguaAI",
+    description: "LinguaAI is an AI-powered web platform that enhances English learning through role-based conversational practice, contextual feedback, and voice-enabled interaction, delivering personalized tutoring experiences.",
+    tags: ["AI-powered Interview Preparation", "Role-based conversational practice", "Language Learning", "Personalized tutoring"],
+    image: "https://www.mindinventory.com/blog/wp-content/uploads/2020/08/language-learning-app.webp",
+  }, {
+    id: 4,
     title: "Plant Shop Mobile App",
     description: "A modern e-commerce mobile application for plant lovers with seamless checkout experience.",
     tags: ["UI/UX Design", "App Design", "Wireframe"],
     image: "https://images.unsplash.com/photo-1545241047-6083a3684587?w=600&h=400&fit=crop",
-  },
-  {
-    id: 2,
-    title: "Solar Energy Dashboard",
-    description: "Comprehensive dashboard for monitoring solar panel performance and energy consumption.",
-    tags: ["Dashboard", "Web Design", "Data Viz"],
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop",
-  },
-  {
-    id: 3,
-    title: "Finance App Redesign",
-    description: "Complete redesign of a banking application focusing on user experience and accessibility.",
-    tags: ["UI/UX Design", "Mobile", "Fintech"],
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
-  },
+  }
 ];
 
 const Portfolio = () => {
