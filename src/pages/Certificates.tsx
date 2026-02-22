@@ -11,7 +11,7 @@ const certifications = [
         date: "2023",
         description: "Validated foundational cybersecurity skills by successfully compromising a host system and extracting hidden flags through steganography and advanced security analysis.",
         status: "Completed",
-        link: "https://media.licdn.com/dms/image/v2/D4E2DAQEsIl6HSVlb9g/profile-treasury-document-images_1280/B4EZiFF0v5HEAU-/1/1754579558616?e=1772668800&v=beta&t=1DNYUbEkjkdM_zZesgn_jx7152jUu5uB4OMmAHe9cZM",
+        link: "#",
         icon: Award
     }, {
 
@@ -33,19 +33,19 @@ const certifications = [
         icon: FileText
 
     }, {
-        title: "AI Fusion: Exploring Robotics and Artificial Intelligence",
-        issuer: "SJCET",
-        date: "2024",
-        description: "The “AI Fusion” event showcased the integration of robotics, artificial intelligence, and IoT for smart automation and real-time decision-making systems.",
+        title: "The Joy Of Computing Using Python",
+        issuer: "IIT Ropar",
+        date: "2025",
+        description: "A 30-hour immersive course that builds logical thinking and problem-solving skills through Python programming while inspiring exploration of modern computing.",
         status: "Completed",
-        link: "#",
+        link: "https://media.licdn.com/dms/image/v2/D4E2DAQEsIl6HSVlb9g/profile-treasury-document-images_1280/B4EZiFF0v5HEAU-/1/1754579558616?e=1772668800&v=beta&t=1DNYUbEkjkdM_zZesgn_jx7152jUu5uB4OMmAHe9cZM",
         icon: FileText
 
     }, {
-        title: "AI Fusion: Exploring Robotics and Artificial Intelligence",
-        issuer: "SJCET",
-        date: "2024",
-        description: "The “AI Fusion” event showcased the integration of robotics, artificial intelligence, and IoT for smart automation and real-time decision-making systems.",
+        title: "Blockchain Foundation Program",
+        issuer: "Kerala Blockchain Academy(KBA)",
+        date: "7-10-2025",
+        description: "An advanced, in-depth blockchain program covering core technologies, architectures, and real-world applications, reinforced through multi-level assessments and comprehensive practical learning.",
         status: "Completed",
         link: "#",
         icon: FileText
