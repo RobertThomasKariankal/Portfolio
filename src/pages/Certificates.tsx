@@ -51,10 +51,10 @@ const certifications = [
         icon: FileText
 
     }, {
-        title: "AI Fusion: Exploring Robotics and Artificial Intelligence",
-        issuer: "SJCET",
-        date: "2024",
-        description: "The “AI Fusion” event showcased the integration of robotics, artificial intelligence, and IoT for smart automation and real-time decision-making systems.",
+        title: "Quantum Computing and Security",
+        issuer: "Manorama Horizon",
+        date: "26,27,28-05-2023",
+        description: "An intensive program on Quantum Computing and Security covering foundational principles, cryptographic implications, and emerging technologies, completed through expert-led sessions and structured learning.",
         status: "Completed",
         link: "#",
         icon: FileText
@@ -73,9 +73,13 @@ const skillPages = [
         skills: ["Python", "Bash Scripting", "SQL", "JavaScript", "C/C++", "PowerShell"],
     },
     {
-        title: "Core Skills",
+        title: "Security Skills",
         skills: ["Network Security", "Penetration Testing", "Cryptography", "Malware Analysis", "SIEM", "Incident Response"],
     },
+    {
+        title: "Core Skills",
+        skills: ["Adaptability", "Problem-Solving", "Interpersonal & Soft Skills", "Communication", "Time Management", "Teamwork"],
+    }
 ];
 
 const Certificates = () => {
