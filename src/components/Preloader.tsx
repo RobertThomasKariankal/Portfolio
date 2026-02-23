@@ -58,7 +58,7 @@ const Preloader = ({ onComplete }: { onComplete: () => void }) => {
             <motion.div
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
-                transition={{ duration: 2.2, ease: "easeInOut" }}
+                transition={{ duration: 1.2, ease: "easeInOut" }}
                 className="mt-4 w-24 md:w-32 h-[1px] bg-primary/20 origin-left"
             />
         </motion.div>

@@ -24,6 +24,12 @@ const projects = [
     image: "https://www.mindinventory.com/blog/wp-content/uploads/2020/08/language-learning-app.webp",
   }, {
     id: 4,
+    title: "Speech Detection",
+    description: "Large Data model That identifies the vulgernous of a sentence.",
+    tags: ["LLM", "Miniproject", "Comment Safety"],
+    image: "https://images.unsplash.com/photo-1545241047-6083a3684587?w=600&h=400&fit=crop",
+  }, {
+    id: 5,
     title: "Plant Shop Mobile App",
     description: "A modern e-commerce mobile application for plant lovers with seamless checkout experience.",
     tags: ["UI/UX Design", "App Design", "Wireframe"],
