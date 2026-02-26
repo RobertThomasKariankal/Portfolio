@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
 import { Mail, MapPin, Phone, Send, Github, Linkedin, Twitter } from "lucide-react";
+import { useForm, ValidationError } from "@formspree/react";
 
 const Contact = () => {
+  const [state, handleSubmit] = useForm("mgoldnye");
+
   return (
     <section id="contact" className="py-24 relative">
       <div className="watermark-text top-20 right-0">CONTACT</div>
@@ -90,56 +93,89 @@ const Contact = () => {
 
           {/* Contact Form */}
           <motion.form
+            onSubmit={handleSubmit}
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
             className="glass-morphism-heavy p-10 space-y-8 border-white/10"
           >
-            <div className="grid sm:grid-cols-2 gap-8">
-              <div>
-                <label className="block text-sm font-bold uppercase tracking-widest mb-3 text-primary">Name</label>
-                <input
-                  type="text"
-                  placeholder="John Doe"
-                  className="clay-morphism w-full px-6 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:ring-2 focus:ring-primary/50"
-                />
+            {state.succeeded ? (
+              <div className="text-center space-y-2">
+                <p className="text-xl font-bold">Message sent ✅</p>
+                <p className="text-muted-foreground">
+                  Thanks! I’ll get back to you soon.
+                </p>
               </div>
-              <div>
-                <label className="block text-sm font-bold uppercase tracking-widest mb-3 text-primary">Email</label>
-                <input
-                  type="email"
-                  placeholder="john@example.com"
-                  className="clay-morphism w-full px-6 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:ring-2 focus:ring-primary/50"
-                />
-              </div>
-            </div>
+            ) : (
+              <>
+                <div className="grid sm:grid-cols-2 gap-8">
+                  <div>
+                    <label className="block text-sm font-bold uppercase tracking-widest mb-3 text-primary">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="John Doe"
+                      required
+                      className="clay-morphism w-full px-6 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    />
+                  </div>
 
-            <div>
-              <label className="block text-sm font-bold uppercase tracking-widest mb-3 text-primary">Subject</label>
-              <input
-                type="text"
-                placeholder="Project Inquiry"
-                className="clay-morphism w-full px-6 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:ring-2 focus:ring-primary/50"
-              />
-            </div>
+                  <div>
+                    <label className="block text-sm font-bold uppercase tracking-widest mb-3 text-primary">
+                      Email
+                    </label>
+                    <input
+                      id="email"
+                      type="email"
+                      name="email"
+                      placeholder="john@example.com"
+                      required
+                      className="clay-morphism w-full px-6 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    />
+                    <ValidationError prefix="Email" field="email" errors={state.errors} />
+                  </div>
+                </div>
 
-            <div>
-              <label className="block text-sm font-bold uppercase tracking-widest mb-3 text-primary">Message</label>
-              <textarea
-                rows={5}
-                placeholder="Tell me about your project..."
-                className="clay-morphism w-full px-6 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
-              />
-            </div>
+                <div>
+                  <label className="block text-sm font-bold uppercase tracking-widest mb-3 text-primary">
+                    Subject
+                  </label>
+                  <input
+                    type="text"
+                    name="subject"
+                    placeholder="Project Inquiry"
+                    className="clay-morphism w-full px-6 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  />
+                </div>
 
-            <button
-              type="submit"
-              className="clay-morphism-primary w-full py-5 font-bold text-lg uppercase tracking-widest flex items-center justify-center gap-3"
-            >
-              <Send className="w-6 h-6" />
-              Send Message
-            </button>
+                <div>
+                  <label className="block text-sm font-bold uppercase tracking-widest mb-3 text-primary">
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={5}
+                    placeholder="Tell me about your project..."
+                    required
+                    className="clay-morphism w-full px-6 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
+                  />
+                  <ValidationError prefix="Message" field="message" errors={state.errors} />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={state.submitting}
+                  className="clay-morphism-primary w-full py-5 font-bold text-lg uppercase tracking-widest flex items-center justify-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  <Send className="w-6 h-6" />
+                  {state.submitting ? "Sending..." : "Send Message"}
+                </button>
+              </>
+            )}
           </motion.form>
         </div>
       </div>
