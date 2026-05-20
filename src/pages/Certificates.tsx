@@ -11,7 +11,7 @@ const certifications = [
         date: "2023",
         description: "Validated foundational cybersecurity skills by successfully compromising a host system and extracting hidden flags through steganography and advanced security analysis.",
         status: "Completed",
-        link: "#",
+        link: "https://www.linkedin.com/in/robertthomaskariankal/overlay/Certifications/1172161230/treasury/?profileId=ACoAADyS3KUBiV8PKS6OhMOwxRHms6Ys2CLodkQ",
         icon: Award
     }, {
 
@@ -29,7 +29,7 @@ const certifications = [
         date: "2024",
         description: "The “AI Fusion” event showcased the integration of robotics, artificial intelligence, and IoT for smart automation and real-time decision-making systems.",
         status: "Completed",
-        link: "#",
+        link: "https://www.linkedin.com/in/robertthomaskariankal/overlay/Certifications/1171940031/treasury/?profileId=ACoAADyS3KUBiV8PKS6OhMOwxRHms6Ys2CLodkQ",
         icon: FileText
 
     }, {
@@ -38,7 +38,7 @@ const certifications = [
         date: "2025",
         description: "A 30-hour immersive course that builds logical thinking and problem-solving skills through Python programming while inspiring exploration of modern computing.",
         status: "Completed",
-        link: "https://media.licdn.com/dms/image/v2/D4E2DAQEsIl6HSVlb9g/profile-treasury-document-images_1280/B4EZiFF0v5HEAU-/1/1754579558616?e=1772668800&v=beta&t=1DNYUbEkjkdM_zZesgn_jx7152jUu5uB4OMmAHe9cZM",
+        link: "https://www.linkedin.com/in/robertthomaskariankal/overlay/Certifications/85423494/treasury/?profileId=ACoAADyS3KUBiV8PKS6OhMOwxRHms6Ys2CLodkQ",
         icon: FileText
 
     }, {
