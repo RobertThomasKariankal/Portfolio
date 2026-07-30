@@ -63,23 +63,54 @@ const certifications = [
 
 ];
 
-const skillPages = [
+interface Skill { name: string; level: number }
+interface SkillPage { title: string; skills: Skill[] }
+
+const skillPages: SkillPage[] = [
     {
         title: "Security Tools",
-        skills: ["Wireshark", "Nmap", "Burp Suite", "Metasploit", "Kali Linux", "Nessus"],
+        skills: [
+            { name: "Wireshark", level: 85 },
+            { name: "Nmap", level: 90 },
+            { name: "Burp Suite", level: 80 },
+            { name: "Metasploit", level: 70 },
+            { name: "Kali Linux", level: 88 },
+            { name: "Nessus", level: 65 },
+        ],
     },
     {
         title: "Programming",
-        skills: ["Python", "Bash Scripting", "SQL", "JavaScript", "C/C++", "PowerShell"],
+        skills: [
+            { name: "Python", level: 88 },
+            { name: "Bash Scripting", level: 80 },
+            { name: "SQL", level: 72 },
+            { name: "JavaScript", level: 75 },
+            { name: "C/C++", level: 65 },
+            { name: "PowerShell", level: 70 },
+        ],
     },
     {
         title: "Security Skills",
-        skills: ["Network Security", "Penetration Testing", "Cryptography", "Malware Analysis", "SIEM", "Incident Response"],
+        skills: [
+            { name: "Network Security", level: 85 },
+            { name: "Penetration Testing", level: 80 },
+            { name: "Cryptography", level: 78 },
+            { name: "Malware Analysis", level: 68 },
+            { name: "SIEM", level: 60 },
+            { name: "Incident Response", level: 72 },
+        ],
     },
     {
         title: "Core Skills",
-        skills: ["Adaptability", "Problem-Solving", "Interpersonal & Soft Skills", "Communication", "Time Management", "Teamwork"],
-    }
+        skills: [
+            { name: "Problem-Solving", level: 92 },
+            { name: "Communication", level: 85 },
+            { name: "Teamwork", level: 90 },
+            { name: "Adaptability", level: 88 },
+            { name: "Time Management", level: 80 },
+            { name: "Interpersonal Skills", level: 82 },
+        ],
+    },
 ];
 
 const Certificates = () => {
@@ -175,19 +206,30 @@ const Certificates = () => {
                                     </div>
                                 </div>
 
-                                <div className="space-y-4">
+                                <div className="space-y-3">
                                     <AnimatePresence mode="wait">
                                         <motion.div
                                             key={currentPage}
                                             initial={{ opacity: 0, y: 10 }}
                                             animate={{ opacity: 1, y: 0 }}
                                             exit={{ opacity: 0, y: -10 }}
-                                            className="grid grid-cols-1 gap-3"
+                                            className="space-y-4"
                                         >
-                                            {skillPages[currentPage].skills.map((skill) => (
-                                                <div key={skill} className="px-4 py-3 bg-secondary/30 rounded-lg border border-border flex items-center gap-3">
-                                                    <div className="w-2 h-2 rounded-full bg-primary" />
-                                                    <span className="font-medium">{skill}</span>
+                                            {skillPages[currentPage].skills.map((skill, si) => (
+                                                <div key={skill.name}>
+                                                    <div className="flex items-center justify-between mb-1.5">
+                                                        <span className="text-sm font-medium text-foreground">{skill.name}</span>
+                                                        <span className="text-xs font-bold text-primary tabular-nums">{skill.level}%</span>
+                                                    </div>
+                                                    <div className="h-2 bg-secondary rounded-full overflow-hidden">
+                                                        <motion.div
+                                                            className="h-full bg-primary rounded-full"
+                                                            initial={{ width: 0 }}
+                                                            animate={{ width: `${skill.level}%` }}
+                                                            transition={{ duration: 0.8, delay: si * 0.07, ease: [0.25, 0.46, 0.45, 0.94] }}
+                                                            style={{ boxShadow: "0 0 8px hsl(var(--primary)/0.5)" }}
+                                                        />
+                                                    </div>
                                                 </div>
                                             ))}
                                         </motion.div>

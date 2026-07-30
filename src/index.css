@@ -90,6 +90,13 @@
     font-family: 'Inter', sans-serif;
   }
 
+  /* Hide native cursor on pointer devices so custom cursor takes over */
+  @media (pointer: fine) {
+    *, *::before, *::after {
+      cursor: none !important;
+    }
+  }
+
   h1,
   h2,
   h3,
