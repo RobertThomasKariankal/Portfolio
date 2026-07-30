@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import SkillsMarquee from "@/components/SkillsMarquee";
+import StatsBar from "@/components/StatsBar";
 import Footer from "@/components/Footer";
 import Preloader from "@/components/Preloader";
 import { useState, useEffect } from "react";
@@ -26,6 +27,7 @@ const Index = () => {
             <div className="relative z-10 -mt-10 mb-20">
               <SkillsMarquee />
             </div>
+            <StatsBar />
             <Footer />
           </motion.div>
         )}
