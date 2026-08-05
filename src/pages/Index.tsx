@@ -2,9 +2,11 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import SkillsMarquee from "@/components/SkillsMarquee";
 import StatsBar from "@/components/StatsBar";
+import { CyberStatsWidget } from "@/components/CyberStatsWidget";
+import { SecurityPlayground } from "@/components/SecurityPlayground";
 import Footer from "@/components/Footer";
 import Preloader from "@/components/Preloader";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 const Index = () => {
@@ -24,9 +26,11 @@ const Index = () => {
           >
             <Navbar />
             <Hero />
-            <div className="relative z-10 -mt-10 mb-20">
+            <div className="relative z-10 -mt-10 mb-12">
               <SkillsMarquee />
             </div>
+            <CyberStatsWidget />
+            <SecurityPlayground />
             <StatsBar />
             <Footer />
           </motion.div>

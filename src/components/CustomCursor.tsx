@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 const CustomCursor = () => {
@@ -7,10 +7,9 @@ const CustomCursor = () => {
     const dotX = useMotionValue(-100);
     const dotY = useMotionValue(-100);
 
-    const springX = useSpring(cursorX, { stiffness: 120, damping: 20 });
-    const springY = useSpring(cursorY, { stiffness: 120, damping: 20 });
-
-    const isHovering = useRef(false);
+    // High stiffness and responsive damping for instant zero-lag cursor tracking
+    const springX = useSpring(cursorX, { stiffness: 900, damping: 40 });
+    const springY = useSpring(cursorY, { stiffness: 900, damping: 40 });
 
     useEffect(() => {
         const move = (e: MouseEvent) => {
@@ -20,34 +19,27 @@ const CustomCursor = () => {
             dotY.set(e.clientY);
         };
 
-        const enterLink = () => { isHovering.current = true; };
-        const leaveLink = () => { isHovering.current = false; };
-
-        window.addEventListener("mousemove", move);
-        document.querySelectorAll("a,button").forEach((el) => {
-            el.addEventListener("mouseenter", enterLink);
-            el.addEventListener("mouseleave", leaveLink);
-        });
+        window.addEventListener("mousemove", move, { passive: true });
 
         return () => {
             window.removeEventListener("mousemove", move);
         };
     }, [cursorX, cursorY, dotX, dotY]);
 
-    // Only render on desktop
+    // Skip rendering on touch devices
     if (typeof window !== "undefined" && window.matchMedia("(pointer:coarse)").matches) return null;
 
     return (
         <>
-            {/* Outer ring — spring-lagged */}
+            {/* Outer ring — ultra fast responsive spring */}
             <motion.div
                 style={{ x: springX, y: springY, translateX: "-50%", translateY: "-50%" }}
-                className="fixed top-0 left-0 w-9 h-9 rounded-full border border-primary/60 z-[9998] pointer-events-none mix-blend-difference"
+                className="fixed top-0 left-0 w-8 h-8 rounded-full border border-primary/70 z-[9998] pointer-events-none mix-blend-difference"
             />
-            {/* Inner dot — instant */}
+            {/* Inner dot — 1:1 hardware mouse sync */}
             <motion.div
                 style={{ x: dotX, y: dotY, translateX: "-50%", translateY: "-50%" }}
-                className="fixed top-0 left-0 w-2 h-2 rounded-full bg-primary z-[9999] pointer-events-none"
+                className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full bg-primary z-[9999] pointer-events-none"
             />
         </>
     );

@@ -19,7 +19,7 @@ const experiences: TimelineItem[] = [
         date: "2025 - Present",
         description: "Improvising Quantum Enhanced Secure Communication Systems.",
         type: "work",
-        image: "exp-quantum.jpg",
+        image: "exp-quantum.svg",
     },
     {
         title: "CINEHACK AI",
@@ -27,7 +27,7 @@ const experiences: TimelineItem[] = [
         date: "2025",
         description: "Created Aegis — solved online harassment and illegal piracy of original content using Advanced AI Detection and Crawlers.",
         type: "education",
-        image: "exp-cinehack.jpg",
+        image: "exp-cinehack.svg",
     },
     {
         title: "NRPF Unit Coordinator",
@@ -35,7 +35,7 @@ const experiences: TimelineItem[] = [
         date: "2024 - 2025",
         description: "NRPF is a flagship NSS Kerala environmental initiative that mobilizes student volunteers to lead afforestation, waste management, water conservation, and sustainability actions across campuses and communities.",
         type: "Volunteer",
-        image: "exp-nss.jpg",
+        image: "exp-nss.svg",
     },
     {
         title: "B.Tech in Computer Science (Cybersecurity)",
@@ -43,7 +43,7 @@ const experiences: TimelineItem[] = [
         date: "2023 - Present",
         description: "Focusing on ethical hacking, cryptography, and network security protocols.",
         type: "education",
-        image: "exp-btech.jpg",
+        image: "exp-btech.svg",
     },
     {
         title: "Freelance Web Pen-tester",
@@ -51,7 +51,7 @@ const experiences: TimelineItem[] = [
         date: "2023 - 2025",
         description: "Performed security audits for small to medium scale web applications.",
         type: "work",
-        image: "exp-pentest.jpg",
+        image: "exp-pentest.svg",
     },
     {
         title: "Security Bootcamp",
@@ -59,7 +59,7 @@ const experiences: TimelineItem[] = [
         date: "2024",
         description: "Intensive 6-month program covering basic to advanced security concepts.",
         type: "education",
-        image: "exp-bootcamp.jpg",
+        image: "exp-bootcamp.svg",
     },
 ];
 

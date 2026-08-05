@@ -8,9 +8,9 @@ import Connect from "@/pages/Connect";
 import NotFound from "@/pages/NotFound";
 
 const pageVariants = {
-    initial: { opacity: 0, y: 18, filter: "blur(6px)" },
-    animate: { opacity: 1, y: 0, filter: "blur(0px)" },
-    exit: { opacity: 0, y: -18, filter: "blur(6px)" },
+    initial: { opacity: 0, y: 8 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -8 },
 };
 
 const AnimatedRoutes = () => {
@@ -24,7 +24,7 @@ const AnimatedRoutes = () => {
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                transition={{ duration: 0.38, ease: [0.25, 0.46, 0.45, 0.94] }}
+                transition={{ duration: 0.15, ease: "easeOut" }}
                 style={{ minHeight: "100vh" }}
             >
                 <Routes location={location}>

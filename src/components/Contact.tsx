@@ -53,11 +53,13 @@ const Contact = () => {
 
               <div className="flex items-center gap-4">
                 <div className="p-3 bg-primary/20 rounded-xl">
-                  <Phone className="w-5 h-5 text-primary" />
+                  <Mail className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Phone</p>
-                  <p className="font-medium">+1 (234) 567-8901</p>
+                  <p className="text-sm text-muted-foreground">Direct Email</p>
+                  <a href="mailto:robertthomaskariankal@gmail.com" className="font-medium hover:text-primary transition-colors">
+                    robertthomaskariankal@gmail.com
+                  </a>
                 </div>
               </div>
 
@@ -67,27 +69,31 @@ const Contact = () => {
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Location</p>
-                  <p className="font-medium">Pala, Kottayam, Kerala</p>
+                  <p className="font-medium">Pala, Kottayam, Kerala, India</p>
                 </div>
               </div>
             </div>
 
-            <div className="flex gap-4 pt-4">
-              {[
-                { icon: Github, link: "https://github.com/RobertThomasKariankal" },
-                { icon: Linkedin, link: "https://www.linkedin.com/in/robertthomaskariankal/" },
-                { icon: Twitter, link: "#" },
-              ].map(({ icon: Icon, link }, index) => (
-                <a
-                  key={index}
-                  href={link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 bg-secondary rounded-xl hover:bg-primary/20 hover:text-primary transition-all duration-300"
-                >
-                  <Icon className="w-5 h-5" />
-                </a>
-              ))}
+            <div className="flex flex-wrap gap-4 pt-4">
+              <a
+                href="https://github.com/RobertThomasKariankal"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 bg-secondary rounded-xl hover:bg-primary/20 hover:text-primary transition-all duration-300 flex items-center gap-2 text-xs font-mono font-bold"
+              >
+                <Github className="w-5 h-5" />
+                <span>GitHub</span>
+              </a>
+
+              <a
+                href="https://www.linkedin.com/in/robertthomaskariankal/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 bg-secondary rounded-xl hover:bg-primary/20 hover:text-primary transition-all duration-300 flex items-center gap-2 text-xs font-mono font-bold"
+              >
+                <Linkedin className="w-5 h-5" />
+                <span>LinkedIn</span>
+              </a>
             </div>
           </motion.div>
 
