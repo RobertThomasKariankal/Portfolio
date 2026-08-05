@@ -4,12 +4,11 @@ const MouseTrail = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
-        // Skip on touch devices
         if (window.matchMedia("(pointer: coarse)").matches) return;
 
         const canvas = canvasRef.current;
         if (!canvas) return;
-        const ctx = canvas.getContext("2d");
+        const ctx = canvas.getContext("2d", { alpha: true });
         if (!ctx) return;
 
         const resize = () => {
@@ -17,23 +16,23 @@ const MouseTrail = () => {
             canvas.height = window.innerHeight;
         };
         resize();
-        window.addEventListener("resize", resize);
+        window.addEventListener("resize", resize, { passive: true });
 
         type Particle = { x: number; y: number; life: number; size: number; vx: number; vy: number };
         const particles: Particle[] = [];
         let animId: number;
 
         const onMove = (e: MouseEvent) => {
-            for (let i = 0; i < 4; i++) {
-                particles.push({
-                    x: e.clientX + (Math.random() - 0.5) * 12,
-                    y: e.clientY + (Math.random() - 0.5) * 12,
-                    life: 1,
-                    size: 1.5 + Math.random() * 2.5,
-                    vx: (Math.random() - 0.5) * 0.6,
-                    vy: (Math.random() - 0.5) * 0.6,
-                });
-            }
+            // Lightweight 1 particle per mousemove frame for fluid performance
+            particles.push({
+                x: e.clientX,
+                y: e.clientY,
+                life: 1,
+                size: 2 + Math.random() * 2,
+                vx: (Math.random() - 0.5) * 0.4,
+                vy: (Math.random() - 0.5) * 0.4,
+            });
+            if (particles.length > 25) particles.shift();
         };
 
         const draw = () => {
@@ -41,23 +40,25 @@ const MouseTrail = () => {
 
             for (let i = particles.length - 1; i >= 0; i--) {
                 const p = particles[i];
-                p.life -= 0.035;
+                p.life -= 0.05;
                 p.x += p.vx;
                 p.y += p.vy;
 
-                if (p.life <= 0) { particles.splice(i, 1); continue; }
+                if (p.life <= 0) {
+                    particles.splice(i, 1);
+                    continue;
+                }
 
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
-                // Use a fixed HSL value that matches the primary colour
-                ctx.fillStyle = `rgba(100, 140, 220, ${p.life * 0.55})`;
+                ctx.fillStyle = `rgba(104, 144, 208, ${p.life * 0.4})`;
                 ctx.fill();
             }
 
             animId = requestAnimationFrame(draw);
         };
 
-        window.addEventListener("mousemove", onMove);
+        window.addEventListener("mousemove", onMove, { passive: true });
         draw();
 
         return () => {
