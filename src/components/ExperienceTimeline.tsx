@@ -1,226 +1,142 @@
 import { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { Rocket, Briefcase, GraduationCap, Calendar, Heart } from "lucide-react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-interface TimelineItem {
-    title: string;
-    organization: string;
-    date: string;
-    description: string;
-    type: "work" | "education" | "Volunteer";
-    /** Drop your image into public/images/ and set the filename here, e.g. "quantum.jpg" */
-    image?: string;
-}
+gsap.registerPlugin(ScrollTrigger);
 
-const experiences: TimelineItem[] = [
-    {
-        title: "Quantum Researcher",
-        organization: "Personal Project",
-        date: "2025 - Present",
-        description: "Improvising Quantum Enhanced Secure Communication Systems.",
-        type: "work",
-        image: "exp-quantum.svg",
-    },
-    {
-        title: "CINEHACK AI",
-        organization: "Federal Institute of Science And Technology (FISAT), Angamaly",
-        date: "2025",
-        description: "Created Aegis — solved online harassment and illegal piracy of original content using Advanced AI Detection and Crawlers.",
-        type: "education",
-        image: "exp-cinehack.svg",
-    },
-    {
-        title: "NRPF Unit Coordinator",
-        organization: "National Service Scheme (NSS), SJCET",
-        date: "2024 - 2025",
-        description: "NRPF is a flagship NSS Kerala environmental initiative that mobilizes student volunteers to lead afforestation, waste management, water conservation, and sustainability actions across campuses and communities.",
-        type: "Volunteer",
-        image: "exp-nss.svg",
-    },
-    {
-        title: "B.Tech in Computer Science (Cybersecurity)",
-        organization: "St Joseph's College of Engineering And Technology, Palai",
-        date: "2023 - Present",
-        description: "Focusing on ethical hacking, cryptography, and network security protocols.",
-        type: "education",
-        image: "exp-btech.svg",
-    },
-    {
-        title: "Freelance Web Pen-tester",
-        organization: "Various Clients",
-        date: "2023 - 2025",
-        description: "Performed security audits for small to medium scale web applications.",
-        type: "work",
-        image: "exp-pentest.svg",
-    },
-    {
-        title: "Security Bootcamp",
-        organization: "Edwhere",
-        date: "2024",
-        description: "Intensive 6-month program covering basic to advanced security concepts.",
-        type: "education",
-        image: "exp-bootcamp.svg",
-    },
+const experienceData = [
+  {
+    year: "2025",
+    role: "Quantum Researcher",
+    company: "Personal Project",
+    description:
+      "Researching and implementing post-quantum cryptographic algorithms. Focusing on lattice-based cryptography to secure communications against future quantum computer attacks.",
+    skills: ["Python", "Cryptography", "Math"],
+  },
+  {
+    year: "2025",
+    role: "Core Team Member",
+    company: "CINEHACK AI, FISAT, Angamaly",
+    description:
+      "Organized and managed technical events. Collaborated with a team of developers and AI enthusiasts to build intelligent solutions for hackathon challenges.",
+    skills: ["Leadership", "Event Management", "AI"],
+  },
+  {
+    year: "2024",
+    role: "NRPF Coordinator",
+    company: "NSS, SJCET",
+    description:
+      "Coordinated the National Rural Produce Forum (NRPF) activities. Managed logistics, team coordination, and successfully executed community outreach programs.",
+    skills: ["Management", "Coordination", "Communication"],
+  },
 ];
 
-const typeIcon = (type: TimelineItem["type"]) => {
-    if (type === "work") return <Briefcase className="w-5 h-5" />;
-    if (type === "Volunteer") return <Heart className="w-5 h-5" />;
-    return <GraduationCap className="w-5 h-5" />;
-};
-
 const ExperienceTimeline = () => {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start end", "end start"],
+  const containerRef = useRef<HTMLElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    // 1. Progress line fills down
+    gsap.to(lineRef.current, {
+        scaleY: 1,
+        ease: "none",
+        scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top center",
+            end: "bottom center",
+            scrub: true,
+        }
     });
 
-    const smoothProgress = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 30,
-        restDelta: 0.001
+    // 2. Timeline items animate in
+    const items = gsap.utils.toArray(".timeline-item");
+    items.forEach((item: any, i) => {
+        const isLeft = i % 2 === 0;
+        const card = item.querySelector(".timeline-card");
+        const dot = item.querySelector(".timeline-dot");
+        
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: item,
+                start: "top 80%",
+                toggleActions: "play none none none"
+            }
+        });
+
+        tl.from(dot, { scale: 0, opacity: 0, duration: 0.4, ease: "back.out(2)" })
+          .fromTo(card, 
+            { x: isLeft ? -50 : 50, opacity: 0, rotateX: 15 },
+            { x: 0, opacity: 1, rotateX: 0, duration: 0.8, ease: "power3.out" },
+            "-=0.2"
+          );
     });
 
-    // Animated Y position for the rocket
-    const rocketY = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
+  }, { scope: containerRef });
 
-    return (
-        <div ref={containerRef} className="max-w-5xl mx-auto py-20 relative">
-            {/* Central Dotted Line */}
-            <div className="absolute left-1/2 top-0 bottom-0 w-[2px] -translate-x-1/2 overflow-hidden hidden md:block">
-                <div className="h-full w-full border-l-2 border-dashed border-primary/30" />
+  return (
+    <section id="experience" ref={containerRef} className="section-padding bg-background relative z-10 overflow-hidden">
+      <div className="container px-6 mx-auto">
+        
+        <div className="max-w-2xl mx-auto text-center mb-20">
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-foreground">
+                Experience
+            </h2>
+            <p className="text-muted-foreground text-lg">
+                My journey through cybersecurity, development, and leadership.
+            </p>
+        </div>
 
-                <motion.div
-                    className="absolute top-0 left-0 w-full bg-primary origin-top"
-                    style={{ height: rocketY }}
-                />
+        <div className="relative max-w-4xl mx-auto">
+            {/* Center Line Track */}
+            <div className="absolute left-[28px] md:left-1/2 top-0 bottom-0 w-[1px] bg-border -translate-x-1/2"></div>
+            {/* Center Line Fill */}
+            <div ref={lineRef} className="absolute left-[28px] md:left-1/2 top-0 bottom-0 w-[1px] bg-accent -translate-x-1/2 origin-top scale-y-0 z-10"></div>
 
-                <motion.div
-                    className="absolute left-1/2 -translate-x-1/2 z-20 text-primary"
-                    style={{ top: rocketY, y: "-50%" }}
-                >
-                    <div className="bg-background p-2 rounded-full border border-primary shadow-[0_0_15px_hsl(var(--primary)/0.5)]">
-                        <Rocket className="w-6 h-6 rotate-180" />
-                    </div>
-                </motion.div>
-            </div>
+            {experienceData.map((item, index) => {
+                const isLeft = index % 2 === 0;
+                return (
+                    <div key={index} className={`timeline-item relative flex flex-col md:flex-row items-start md:items-center justify-between mb-12 md:mb-24 ${isLeft ? "md:flex-row-reverse" : ""}`}>
+                        
+                        {/* Timeline Dot */}
+                        <div className="absolute left-[28px] md:left-1/2 w-4 h-4 rounded-full bg-background border-2 border-accent -translate-x-1/2 mt-6 md:mt-0 z-20 timeline-dot shadow-[0_0_10px_var(--accent)]"></div>
 
-            <div className="space-y-24">
-                {experiences.map((item, index) => (
-                    <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 40 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.15 }}
-                        viewport={{ once: true, margin: "-80px" }}
-                        className={`flex flex-col md:flex-row items-stretch gap-6 md:gap-0 ${
-                            index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                        }`}
-                    >
-                        {/* ── Content Card ────────────────────── */}
-                        <motion.div
-                            initial={{ opacity: 0, x: index % 2 === 0 ? -40 : 40 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.7, delay: 0.2 }}
-                            viewport={{ once: true }}
-                            className={`w-full md:w-[45%] flex flex-col ${
-                                index % 2 === 0 ? "md:text-right md:pr-8" : "md:text-left md:pl-8"
-                            }`}
-                        >
-                            <div className="glass-morphism-heavy p-8 hover-lift border-primary/10 group h-full flex flex-col justify-between">
-                                <div>
-                                    <div className={`flex items-center gap-3 mb-4 ${index % 2 === 0 ? "md:justify-end" : "md:justify-start"}`}>
-                                        <div className="p-2 bg-primary/20 rounded-lg text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
-                                            {typeIcon(item.type)}
-                                        </div>
-                                        <span className="text-xs font-bold text-primary tracking-widest uppercase border border-primary/30 px-3 py-1 rounded-full">
-                                            {item.type}
-                                        </span>
-                                    </div>
+                        {/* Spacer for alternating layout */}
+                        <div className="hidden md:block w-5/12"></div>
 
-                                    <h3 className="text-xl md:text-2xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">
-                                        {item.title}
-                                    </h3>
-                                    <p className="text-base font-medium text-foreground/70 mb-3">{item.organization}</p>
-                                    <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
+                        {/* Content Card */}
+                        <div className="w-full md:w-5/12 pl-16 md:pl-0 timeline-card perspective-1000">
+                            <div className="p-8 rounded-2xl bg-secondary/20 hover:bg-secondary/40 border border-border/50 transition-colors">
+                                <div className="font-mono text-accent font-bold mb-2 uppercase tracking-widest text-sm">
+                                    {item.year}
                                 </div>
-
-                                <div className={`mt-6 flex items-center gap-2 text-primary/80 font-medium text-sm ${index % 2 === 0 ? "md:justify-end" : "md:justify-start"}`}>
-                                    <Calendar className="w-4 h-4 flex-shrink-0" />
-                                    <span>{item.date}</span>
+                                <h3 className="font-display text-2xl font-bold text-foreground mb-1">
+                                    {item.role}
+                                </h3>
+                                <div className="text-muted-foreground font-medium mb-4">
+                                    {item.company}
+                                </div>
+                                <p className="text-muted-foreground/80 leading-relaxed mb-6">
+                                    {item.description}
+                                </p>
+                                <div className="flex flex-wrap gap-2">
+                                    {item.skills.map((skill, i) => (
+                                        <span key={i} className="text-xs font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-border text-foreground">
+                                            {skill}
+                                        </span>
+                                    ))}
                                 </div>
                             </div>
-                        </motion.div>
-
-                        {/* ── Center dot ──────────────────────── */}
-                        <div className="hidden md:flex items-center justify-center w-12 flex-shrink-0 z-10">
-                            <div className="w-4 h-4 bg-primary rounded-full border-4 border-background shadow-[0_0_12px_hsl(var(--primary)/0.6)]" />
                         </div>
 
-                        {/* ── Image Panel ─────────────────────── */}
-                        <motion.div
-                            initial={{ opacity: 0, x: index % 2 === 0 ? 40 : -40 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.7, delay: 0.3 }}
-                            viewport={{ once: true }}
-                            className={`w-full md:w-[45%] group ${
-                                index % 2 === 0 ? "md:pl-8" : "md:pr-8"
-                            }`}
-                        >
-                            <div className="relative overflow-hidden rounded-3xl border border-primary/20 shadow-[0_8px_40px_hsl(var(--primary)/0.12)] aspect-[4/3] bg-primary/5">
-                                {item.image ? (
-                                    <>
-                                        <img
-                                            src={`/images/${item.image}`}
-                                            alt={item.title}
-                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                            onError={(e) => {
-                                                const img = e.target as HTMLImageElement;
-                                                img.style.display = "none";
-                                                const fb = img.parentElement?.querySelector(".img-fallback") as HTMLElement;
-                                                if (fb) fb.style.display = "flex";
-                                            }}
-                                        />
-                                        {/* Fallback (shown by JS if image 404s) */}
-                                        <div className="img-fallback hidden w-full h-full absolute inset-0 flex-col items-center justify-center">
-                                            <div className="relative flex items-center justify-center mb-4">
-                                                <div className="absolute w-20 h-20 rounded-full border border-primary/20 animate-ping" />
-                                                <div className="absolute w-14 h-14 rounded-full border border-primary/30" />
-                                                <div className="p-4 bg-primary/20 rounded-full text-primary z-10">{typeIcon(item.type)}</div>
-                                            </div>
-                                            <p className="text-[11px] text-muted-foreground font-mono text-center px-6 leading-relaxed">
-                                                Drop <span className="text-primary font-semibold">{item.image}</span><br />
-                                                into <span className="text-primary font-semibold">public/images/</span>
-                                            </p>
-                                        </div>
-                                        {/* Hover overlay */}
-                                        <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
-                                        <div className="absolute bottom-4 left-4 z-20 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                                            <span className="bg-primary text-primary-foreground px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest rounded-full">
-                                                {item.type}
-                                            </span>
-                                        </div>
-                                    </>
-                                ) : (
-                                    <div className="w-full h-full flex flex-col items-center justify-center">
-                                        <div className="relative flex items-center justify-center mb-4">
-                                            <div className="absolute w-24 h-24 rounded-full border border-primary/15 animate-ping" />
-                                            <div className="absolute w-16 h-16 rounded-full border border-primary/25" />
-                                            <div className="p-5 bg-primary/20 rounded-full text-primary z-10">{typeIcon(item.type)}</div>
-                                        </div>
-                                        <p className="text-[11px] text-muted-foreground font-mono text-center px-6">
-                                            Add your photo here
-                                        </p>
-                                    </div>
-                                )}
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                ))}
-            </div>
+                    </div>
+                );
+            })}
         </div>
-    );
+
+      </div>
+    </section>
+  );
 };
 
 export default ExperienceTimeline;

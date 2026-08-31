@@ -5,12 +5,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
 
 import { ThemeProvider } from "./components/ThemeProvider";
-import { CyberUiProvider } from "./context/CyberUiContext";
-import ScrollProgress from "./components/ScrollProgress";
-import CustomCursor from "./components/CustomCursor";
-import MouseTrail from "./components/MouseTrail";
-import BackToTop from "./components/BackToTop";
-import AnimatedRoutes from "./components/AnimatedRoutes";
+import SmoothScroll from "./components/SmoothScroll";
+import MagneticCursor from "./components/MagneticCursor";
+import SinglePage from "./pages/SinglePage";
 
 const queryClient = new QueryClient();
 
@@ -19,15 +16,12 @@ const App = () => (
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem storageKey="vite-ui-theme">
       <TooltipProvider>
         <BrowserRouter>
-          <CyberUiProvider>
-            <ScrollProgress />
-            <CustomCursor />
-            <MouseTrail />
-            <BackToTop />
+          <SmoothScroll>
+            <MagneticCursor />
             <Toaster />
             <Sonner />
-            <AnimatedRoutes />
-          </CyberUiProvider>
+            <SinglePage />
+          </SmoothScroll>
         </BrowserRouter>
       </TooltipProvider>
     </ThemeProvider>

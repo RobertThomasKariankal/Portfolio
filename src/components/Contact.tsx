@@ -1,188 +1,141 @@
-import { motion } from "framer-motion";
-import { Mail, MapPin, Phone, Send, Github, Linkedin, Twitter } from "lucide-react";
-import { useForm, ValidationError } from "@formspree/react";
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Github, Linkedin, Mail, ArrowRight } from "lucide-react";
+// @ts-ignore
+import Splitting from "splitting";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Contact = () => {
-  const [state, handleSubmit] = useForm("mgoldnye");
+  const containerRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  useGSAP(() => {
+    Splitting({ target: titleRef.current, by: "chars" });
+    const chars = titleRef.current?.querySelectorAll(".char");
+
+    // Title reveal
+    if (chars) {
+        gsap.from(chars, {
+            yPercent: 120,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.02,
+            ease: "expo.out",
+            scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top 75%",
+            }
+        });
+    }
+
+    // Form slide up
+    gsap.from(formRef.current, {
+        y: 60,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 60%",
+        }
+    });
+
+    // Socials stagger
+    gsap.from(".social-link", {
+        y: 20,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power2.out",
+        scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 60%",
+        }
+    });
+
+  }, { scope: containerRef });
 
   return (
-    <section id="contact" className="py-24 relative">
-      <div className="watermark-text top-20 right-0">CONTACT</div>
+    <section id="contact" ref={containerRef} className="min-h-screen bg-background relative z-10 flex items-center pt-24 pb-12">
+      <div className="container px-6 mx-auto">
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
+            
+            {/* Left Content */}
+            <div>
+                <h2 className="font-display font-extrabold uppercase leading-[0.85] tracking-tighter text-[clamp(3rem,8vw,8rem)] text-foreground mb-8">
+                    <div className="text-reveal">
+                        <span ref={titleRef} className="block">LET'S WORK</span>
+                    </div>
+                    <div className="text-reveal text-accent ml-2 md:ml-8">
+                        <span className="block">TOGETHER</span>
+                    </div>
+                </h2>
 
-      <div className="container px-6 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/10 mb-6">
-            <span className="text-sm font-medium text-primary">Get In Touch</span>
-          </div>
-
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold">
-            Let's Work <span className="text-gradient">Together</span>
-          </h2>
-        </motion.div>
-
-        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="space-y-8"
-          >
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Have a project in mind or just want to say hello? I'd love to hear from you.
-              Let's create something amazing together.
-            </p>
-
-            <div className="space-y-6">
-              <div className="flex items-center gap-4">
-                <div className="p-3 bg-primary/20 rounded-xl">
-                  <Mail className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Email</p>
-                  <p className="font-medium">robertthomaskariankal@gmail.com</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="p-3 bg-primary/20 rounded-xl">
-                  <Mail className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Direct Email</p>
-                  <a href="mailto:robertthomaskariankal@gmail.com" className="font-medium hover:text-primary transition-colors">
-                    robertthomaskariankal@gmail.com
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="p-3 bg-primary/20 rounded-xl">
-                  <MapPin className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Location</p>
-                  <p className="font-medium">Pala, Kottayam, Kerala, India</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap gap-4 pt-4">
-              <a
-                href="https://github.com/RobertThomasKariankal"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 bg-secondary rounded-xl hover:bg-primary/20 hover:text-primary transition-all duration-300 flex items-center gap-2 text-xs font-mono font-bold"
-              >
-                <Github className="w-5 h-5" />
-                <span>GitHub</span>
-              </a>
-
-              <a
-                href="https://www.linkedin.com/in/robertthomaskariankal/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 bg-secondary rounded-xl hover:bg-primary/20 hover:text-primary transition-all duration-300 flex items-center gap-2 text-xs font-mono font-bold"
-              >
-                <Linkedin className="w-5 h-5" />
-                <span>LinkedIn</span>
-              </a>
-            </div>
-          </motion.div>
-
-          {/* Contact Form */}
-          <motion.form
-            onSubmit={handleSubmit}
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="glass-morphism-heavy p-10 space-y-8 border-white/10"
-          >
-            {state.succeeded ? (
-              <div className="text-center space-y-2">
-                <p className="text-xl font-bold">Message sent ✅</p>
-                <p className="text-muted-foreground">
-                  Thanks! I’ll get back to you soon.
+                <p className="text-xl md:text-2xl text-muted-foreground mb-16 max-w-md">
+                    Have a project in mind or want to discuss security? Drop me a message.
                 </p>
-              </div>
-            ) : (
-              <>
-                <div className="grid sm:grid-cols-2 gap-8">
-                  <div>
-                    <label className="block text-sm font-bold uppercase tracking-widest mb-3 text-primary">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="John Doe"
-                      required
-                      className="clay-morphism w-full px-6 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:ring-2 focus:ring-primary/50"
-                    />
-                  </div>
 
-                  <div>
-                    <label className="block text-sm font-bold uppercase tracking-widest mb-3 text-primary">
-                      Email
-                    </label>
-                    <input
-                      id="email"
-                      type="email"
-                      name="email"
-                      placeholder="john@example.com"
-                      required
-                      className="clay-morphism w-full px-6 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:ring-2 focus:ring-primary/50"
-                    />
-                    <ValidationError prefix="Email" field="email" errors={state.errors} />
-                  </div>
+                <div className="space-y-6">
+                    <div>
+                        <p className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground mb-2">Email</p>
+                        <a href="mailto:robertthomaskariankal@gmail.com" className="text-xl md:text-2xl font-bold text-foreground hover:text-accent transition-colors magnetic" data-magnetic-text="Email">
+                            robertthomaskariankal@gmail.com
+                        </a>
+                    </div>
+                    <div>
+                        <p className="text-xs font-mono font-bold uppercase tracking-widest text-muted-foreground mb-2">Location</p>
+                        <p className="text-xl font-bold text-foreground">
+                            Pala, Kerala, India
+                        </p>
+                    </div>
+                    
+                    <div className="pt-8 flex gap-6">
+                        <a href="https://github.com/RobertThomasKariankal" target="_blank" rel="noopener noreferrer" className="social-link magnetic p-3 bg-secondary rounded-full hover:bg-accent hover:text-background transition-colors" data-magnetic-text="GitHub">
+                            <Github className="w-5 h-5" />
+                        </a>
+                        <a href="https://linkedin.com/in/robertthomaskariankal" target="_blank" rel="noopener noreferrer" className="social-link magnetic p-3 bg-secondary rounded-full hover:bg-accent hover:text-background transition-colors" data-magnetic-text="LinkedIn">
+                            <Linkedin className="w-5 h-5" />
+                        </a>
+                        <a href="mailto:robertthomaskariankal@gmail.com" className="social-link magnetic p-3 bg-secondary rounded-full hover:bg-accent hover:text-background transition-colors" data-magnetic-text="Email">
+                            <Mail className="w-5 h-5" />
+                        </a>
+                    </div>
                 </div>
+            </div>
 
-                <div>
-                  <label className="block text-sm font-bold uppercase tracking-widest mb-3 text-primary">
-                    Subject
-                  </label>
-                  <input
-                    type="text"
-                    name="subject"
-                    placeholder="Project Inquiry"
-                    className="clay-morphism w-full px-6 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:ring-2 focus:ring-primary/50"
-                  />
-                </div>
+            {/* Right Content - Form */}
+            <div className="relative">
+                {/* Background decorative element */}
+                <div className="absolute inset-0 bg-accent/5 rounded-3xl -rotate-3 scale-[1.02] -z-10"></div>
+                
+                <form ref={formRef} action="https://formspree.io/f/mqkopwvd" method="POST" className="card-surface p-8 md:p-12 relative z-0">
+                    <div className="space-y-8">
+                        <div>
+                            <label htmlFor="name" className="form-label">01. What's your name?</label>
+                            <input type="text" id="name" name="name" required placeholder="John Doe *" className="form-input" />
+                        </div>
+                        
+                        <div>
+                            <label htmlFor="email" className="form-label">02. What's your email?</label>
+                            <input type="email" id="email" name="email" required placeholder="john@example.com *" className="form-input" />
+                        </div>
+                        
+                        <div>
+                            <label htmlFor="message" className="form-label">03. How can I help?</label>
+                            <textarea id="message" name="message" required placeholder="Tell me about your project... *" rows={4} className="form-input resize-none"></textarea>
+                        </div>
+                        
+                        <button type="submit" className="btn-primary w-full magnetic" data-magnetic-text="Send">
+                            Send Message <ArrowRight className="w-4 h-4" />
+                        </button>
+                    </div>
+                </form>
+            </div>
 
-                <div>
-                  <label className="block text-sm font-bold uppercase tracking-widest mb-3 text-primary">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={5}
-                    placeholder="Tell me about your project..."
-                    required
-                    className="clay-morphism w-full px-6 py-4 text-foreground placeholder:text-muted-foreground/30 focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
-                  />
-                  <ValidationError prefix="Message" field="message" errors={state.errors} />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={state.submitting}
-                  className="clay-morphism-primary w-full py-5 font-bold text-lg uppercase tracking-widest flex items-center justify-center gap-3 disabled:opacity-60 disabled:cursor-not-allowed"
-                >
-                  <Send className="w-6 h-6" />
-                  {state.submitting ? "Sending..." : "Send Message"}
-                </button>
-              </>
-            )}
-          </motion.form>
         </div>
       </div>
     </section>

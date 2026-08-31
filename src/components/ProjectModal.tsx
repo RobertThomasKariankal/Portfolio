@@ -1,151 +1,120 @@
-import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, ExternalLink, Github, Shield, Cpu, Layers } from "lucide-react";
-
-export interface ProjectData {
-  id: number;
-  title: string;
-  category: "cyber" | "ai" | "web";
-  description: string;
-  longDescription?: string;
-  architecture?: string[];
-  securityAudits?: string[];
-  tags: string[];
-  image: string;
-  githubUrl?: string;
-  liveUrl?: string;
-}
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { X, Github, ExternalLink } from "lucide-react";
 
 interface ProjectModalProps {
-  project: ProjectData | null;
+  project: any;
+  isOpen: boolean;
   onClose: () => void;
 }
 
-export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
+const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isOpen && project) {
+      document.body.style.overflow = "hidden";
+      gsap.to(overlayRef.current, { autoAlpha: 1, duration: 0.3 });
+      gsap.fromTo(contentRef.current, 
+        { y: "100%" }, 
+        { y: "0%", duration: 0.6, ease: "expo.out" }
+      );
+    } else {
+      document.body.style.overflow = "";
+      gsap.to(contentRef.current, { y: "100%", duration: 0.5, ease: "expo.in" });
+      gsap.to(overlayRef.current, { autoAlpha: 0, duration: 0.3, delay: 0.2 });
+    }
+  }, [isOpen, project]);
+
   if (!project) return null;
 
   return (
-    <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative w-full max-w-3xl bg-[#0d1322] border border-primary/30 rounded-3xl overflow-hidden shadow-[0_0_50px_hsl(var(--primary)/0.25)] my-8"
-        >
-          {/* Header Image banner */}
-          <div className="relative h-64 md:h-80 w-full overflow-hidden">
-            <img
-              src={project.image}
-              alt={project.title}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0d1322] via-[#0d1322]/60 to-transparent" />
+    <div 
+      ref={overlayRef} 
+      className="fixed inset-0 z-[100] invisible flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div 
+        ref={contentRef}
+        className="w-full h-[95vh] sm:h-[90vh] bg-background rounded-t-3xl sm:rounded-3xl max-w-6xl mx-auto overflow-hidden flex flex-col shadow-2xl relative translate-y-full"
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Header Image */}
+        <div className="relative h-64 sm:h-96 shrink-0">
+          <img 
+            src={project.image} 
+            alt={project.title} 
+            className="w-full h-full object-cover"
+            onError={(e) => { e.currentTarget.src = project.fallbackImage; }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent"></div>
+          
+          <button 
+            onClick={onClose}
+            className="absolute top-6 right-6 p-3 bg-background/50 hover:bg-background backdrop-blur-md rounded-full text-foreground transition-colors magnetic"
+          >
+            <X className="w-6 h-6" />
+          </button>
+        </div>
 
-            <button
-              onClick={onClose}
-              className="absolute top-4 right-4 p-2 bg-black/60 hover:bg-rose-500/80 text-white rounded-full transition-colors z-10"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="absolute bottom-6 left-6 right-6 space-y-2">
-              <div className="flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-3 py-1 rounded-full bg-primary/20 text-primary border border-primary/30 font-mono text-xs font-bold uppercase"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <h3 className="font-display text-2xl md:text-4xl font-bold text-white">
-                {project.title}
-              </h3>
-            </div>
+        {/* Content */}
+        <div className="flex-1 overflow-y-auto p-8 sm:p-12 relative -mt-20 z-10">
+          <div className="flex flex-wrap gap-2 mb-6">
+            {project.tags.map((tag: string) => (
+              <span key={tag} className="px-3 py-1 bg-accent/10 text-accent text-xs font-mono font-bold uppercase tracking-wider rounded-full">
+                {tag}
+              </span>
+            ))}
           </div>
 
-          {/* Content Area */}
-          <div className="p-6 md:p-8 space-y-6 text-foreground">
+          <h2 className="font-display text-4xl sm:text-6xl font-bold mb-6 text-foreground leading-tight">
+            {project.title}
+          </h2>
+
+          <p className="text-lg sm:text-xl text-muted-foreground mb-12 max-w-3xl leading-relaxed">
+            {project.description}
+          </p>
+
+          <div className="grid sm:grid-cols-2 gap-12 max-w-4xl">
             <div>
-              <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-primary mb-2 flex items-center gap-2">
-                <Layers className="w-4 h-4" />
-                Overview &amp; Architecture
-              </h4>
-              <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
-                {project.longDescription || project.description}
-              </p>
+              <h3 className="font-mono text-sm uppercase tracking-widest text-foreground font-bold mb-4 border-b border-border pb-2">Key Features</h3>
+              <ul className="space-y-4">
+                {project.features?.map((feature: string, i: number) => (
+                  <li key={i} className="flex items-start gap-3 text-muted-foreground">
+                    <span className="text-accent mt-1">●</span>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            {project.architecture && (
-              <div className="p-5 bg-secondary/30 rounded-2xl border border-border space-y-3">
-                <h5 className="font-mono text-xs font-bold uppercase tracking-wider text-cyan-400 flex items-center gap-2">
-                  <Cpu className="w-4 h-4" />
-                  Key System Highlights
-                </h5>
-                <ul className="grid sm:grid-cols-2 gap-2 text-xs md:text-sm font-mono text-foreground/80">
-                  {project.architecture.map((item, idx) => (
-                    <li key={idx} className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+            <div>
+              <h3 className="font-mono text-sm uppercase tracking-widest text-foreground font-bold mb-4 border-b border-border pb-2">Links & Resources</h3>
+              <div className="flex flex-col gap-4">
+                {project.github && (
+                  <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-foreground hover:text-accent transition-colors w-fit group">
+                    <div className="p-3 bg-secondary rounded-full group-hover:bg-accent/10 transition-colors">
+                      <Github className="w-5 h-5" />
+                    </div>
+                    <span className="font-bold uppercase tracking-wider text-sm">View Source</span>
+                  </a>
+                )}
+                {project.demo && (
+                  <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-foreground hover:text-accent transition-colors w-fit group">
+                    <div className="p-3 bg-secondary rounded-full group-hover:bg-accent/10 transition-colors">
+                      <ExternalLink className="w-5 h-5" />
+                    </div>
+                    <span className="font-bold uppercase tracking-wider text-sm">Live Demo</span>
+                  </a>
+                )}
               </div>
-            )}
-
-            {project.securityAudits && (
-              <div className="p-5 bg-emerald-950/20 rounded-2xl border border-emerald-500/20 space-y-3">
-                <h5 className="font-mono text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-2">
-                  <Shield className="w-4 h-4" />
-                  Security Controls &amp; Mitigations
-                </h5>
-                <ul className="space-y-1.5 text-xs md:text-sm font-mono text-emerald-300">
-                  {project.securityAudits.map((item, idx) => (
-                    <li key={idx} className="flex items-center gap-2">
-                      <span>✓</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* Actions */}
-            <div className="pt-6 border-t border-white/10 flex flex-wrap gap-4 items-center justify-between">
-              <div className="flex gap-4">
-                <a
-                  href={project.githubUrl || "https://github.com/RobertThomasKariankal"}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-secondary hover:bg-primary/20 hover:text-primary rounded-full font-mono text-sm font-bold transition-all"
-                >
-                  <Github className="w-4 h-4" />
-                  <span>GitHub Code</span>
-                </a>
-
-                <a
-                  href={project.liveUrl || "#"}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground hover:shadow-[0_0_25px_hsl(var(--primary)/0.6)] rounded-full font-mono text-sm font-bold transition-all"
-                >
-                  <span>Live Preview</span>
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              </div>
-
-              <button
-                onClick={onClose}
-                className="text-xs font-mono text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Close Window [ESC]
-              </button>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
-    </AnimatePresence>
+    </div>
   );
 };
+
+export default ProjectModal;
